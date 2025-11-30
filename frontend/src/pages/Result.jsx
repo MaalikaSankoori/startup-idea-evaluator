@@ -1,13 +1,38 @@
-import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import EvaluationResult from '../components/EvaluationResult';
+import api from '../services/api';
 
 const Result = () => {
     const location = useLocation();
-    const { evaluation, idea } = location.state || {};
+    const { id } = useParams();
 
-    // If someone hits /result directly without state
+    const [idea, setIdea] = useState(location.state?.idea || null);
+    const [evaluation, setEvaluation] = useState(location.state?.evaluation || null);
+    const [loading, setLoading] = useState(!location.state?.evaluation && !!id);
+
+    useEffect(() => {
+        const fetchIdea = async () => {
+            if (!id || evaluation) return; // already have data from state
+            try {
+                const res = await api.get(`/ideas/${id}`);
+                setIdea(res.data);
+                setEvaluation(res.data.evaluation);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchIdea();
+    }, [id, evaluation]);
+
+    if (loading) {
+        return <div className="text-center py-10">Loading...</div>;
+    }
+
     if (!evaluation) {
         return (
             <div className="max-w-md mx-auto text-center py-20">
@@ -45,11 +70,12 @@ const Result = () => {
                     </p>
                 )}
             </div>
-            {/* This component renders ALL fields: scores, risks, suggestions, etc. */}
+
             <EvaluationResult evaluation={evaluation} />
         </div>
     );
 };
 
 export default Result;
+
 

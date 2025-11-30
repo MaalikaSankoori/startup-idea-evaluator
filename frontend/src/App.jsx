@@ -61,13 +61,14 @@ function App() {
 
                             {/* Result page showing evaluation (protected) */}
                             <Route
-                                path="/result"
+                                path="/result/:id?"
                                 element={
                                     <PrivateRoute>
                                         <Result />
                                     </PrivateRoute>
                                 }
                             />
+
 
                             {/* Old /result/:id links redirect to home */}
                             <Route path="/result/:id" element={<Navigate to="/" replace />} />
