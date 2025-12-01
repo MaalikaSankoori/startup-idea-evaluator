@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Sparkles, LayoutDashboard, PlusCircle, LogOut } from 'lucide-react';
 
 const Navbar = () => {
@@ -11,7 +11,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/login'); // or navigate('/');
     };
 
     return (
