@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://startup-idea-evaluator-vu3z.onrender.com',
+    baseURL: 'https://startup-idea-evaluator-vu3z.onrender.com/api',
 });
 
 // Add a request interceptor to add the auth token
