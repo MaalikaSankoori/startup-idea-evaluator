@@ -4,13 +4,14 @@ import { Sparkles, LayoutDashboard, PlusCircle, LogOut } from 'lucide-react';
 
 const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
     const isActive = (path) => location.pathname === path;
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        window.location.href = '/login';
+        navigate('/login');
     };
 
     return (
